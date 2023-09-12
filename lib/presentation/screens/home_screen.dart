@@ -19,6 +19,10 @@ class HomeScreen extends StatelessWidget {
             ListTile(
               title: const Text('BLoC'),
               onTap: () => context.push('/bloc-screen'),
+            ),
+            ListTile(
+              title: const Text('Registro'),
+              onTap: () => context.push('/register-screen'),
             )
           ],
         ),
