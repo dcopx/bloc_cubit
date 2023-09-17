@@ -1,6 +1,7 @@
-import 'package:bloc_cubit/presentation/state/cubit/cubit_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../state/cubit/ counter/cubit_counter.dart';
 
 class CubitScreen extends StatelessWidget {
   static const name = 'cubit-screen';
