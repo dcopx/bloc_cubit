@@ -4,29 +4,33 @@ enum FormStatus { invalid, valid, validating, posting }
 
 class CubitRegisterState extends Equatable {
   final FormStatus status;
-  final String user;
-  final String email;
-  final String password;
+  final bool isValid;
+  final Username user;
+  final Email email;
+  final Password password;
 
   const CubitRegisterState(
       {this.status = FormStatus.invalid,
-      this.user = '',
-      this.email = '',
-      this.password = ''});
+      this.isValid = false,
+      this.user = const Username.pure(),
+      this.email = const Email.pure(),
+      this.password = const Password.pure()});
 
   copyWith({
     FormStatus? status,
-    String? user,
-    String? email,
-    String? password,
+    bool? isValid,
+    Username? user,
+    Email? email,
+    Password? password,
   }) =>
       CubitRegisterState(
         status: status ?? this.status,
+        isValid: isValid ?? this.isValid,
         user: user ?? this.user,
         email: email ?? this.email,
         password: password ?? this.password,
       );
 
   @override
-  List<Object> get props => [status, user, email, password];
+  List<Object> get props => [status, isValid, user, email, password];
 }

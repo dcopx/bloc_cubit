@@ -3,8 +3,6 @@ import 'package:bloc_cubit/presentation/state/cubit/register/cubit_register.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../config/constants/constant_textfield.dart';
-
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
@@ -25,72 +23,41 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-class _FormField extends StatefulWidget {
-  @override
-  State<_FormField> createState() => _FormFieldState();
-}
-
-class _FormFieldState extends State<_FormField> {
-  final _formKey = GlobalKey<FormState>();
-  // String user = '';
-  // String email = '';
-  // String password = '';
-
+class _FormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubitRegister = context.watch<CubitRegister>();
+    final username = cubitRegister.state.user;
+    final password = cubitRegister.state.password;
+    final email = cubitRegister.state.email;
     return Form(
-      key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CustomTextFormField(
-            icon: const Icon(Icons.person_3_outlined),
-            label: 'Usuario',
-            //onChanged: (value) => user = value,
-            onChanged: (value) {
-              cubitRegister.onUserChanged(value);
-              _formKey.currentState?.validate();
-            },
-            onValidate: (value) {
-              return validarTextField(
-                  value: value, isEmpty: false, minLength: 6);
-            },
-          ),
+              icon: const Icon(Icons.person_3_outlined),
+              label: 'Usuario',
+              //onChanged: (value) => user = value,
+              onChanged: cubitRegister.onUserChanged,
+              errorText: username.errorMesage),
           const SizedBox(height: 10),
           CustomTextFormField(
-            icon: const Icon(Icons.mail_outline_outlined),
-            label: 'Correo Electrónico',
-            //onChanged: (value) => email = value,
-            onChanged: (value) {
-              cubitRegister.onEmailChanged(value);
-              _formKey.currentState?.validate();
-            },
-            onValidate: (value) {
-              return validarTextField(
-                  value: value, isEmpty: false, minLength: 6, email: true);
-            },
-          ),
+              icon: const Icon(Icons.mail_outline_outlined),
+              label: 'Correo Electrónico',
+              //onChanged: (value) => email = value,
+              onChanged: cubitRegister.onEmailChanged,
+              errorText: email.errorMesage),
           const SizedBox(height: 10),
           CustomTextFormField(
-            icon: const Icon(Icons.lock_outline),
-            label: 'Contraseña',
-            obscureText: true,
-            //onChanged: (value) => password = value,
-            onChanged: (value) {
-              cubitRegister.onPasswordChanged(value);
-              _formKey.currentState?.validate();
-            },
-            onValidate: (value) {
-              return validarTextField(
-                  value: value, isEmpty: false, minLength: 6);
-            },
-          ),
+              icon: const Icon(Icons.lock_outline),
+              label: 'Contraseña',
+              obscureText: true,
+              //onChanged: (value) => password = value,
+              onChanged: cubitRegister.onPasswordChanged,
+              errorText: password.errorMesage),
           const SizedBox(height: 10),
           FilledButton.tonalIcon(
             onPressed: () {
-              final validacion = _formKey.currentState!.validate();
-              if (!validacion) return;
               cubitRegister.onSubmit();
             },
             icon: const Icon(Icons.save_outlined),
